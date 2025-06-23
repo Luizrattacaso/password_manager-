@@ -1,43 +1,66 @@
 import random
 import string
 
-def menu():
-    chars = list(string.punctuation + string.digits + string.ascii_letters)
+chars = list(" " + string.punctuation + string.digits + string.ascii_letters)
 
+aux = chars.copy()
+random.shuffle(aux)
+key = aux
+
+def menu(chars, key):
     while True:
         print()
-        print("-="*30)
+        print("-=" * 30)
         print("MENU".center(60))
-        print("-="*30)
+        print("-=" * 30)
         print("[1] Create a new password.")
-        print("[2] Encrypt a message")
-        print(f"[3] Exit\n")
+        print("[2] Encrypt a message.")
+        print("[3] Decrypt a message.")
+        print("[4] Exit\n")
 
-        option = int(input("Select your option: "))
+        try:
+            option = int(input("Select an option: "))
+        except ValueError:
+            print("Please enter a valid number.")
+            continue
 
-        if option == 1:
-            chacters = int(input("How many charcters do you want in your new password? "))
-            newPassword = ""
-            for char in range(chacters):
-                newPassword += random.choice(chars)
-            
-            print(f"\nHere is your new password: {newPassword}")
+        match option:
+            case 1:
+                try:
+                    num_characters = int(input("How many characters do you want in your new password? "))
+                    new_password = ''.join(random.choice(chars) for _ in range(num_characters))
+                    print(f"\nHere is your new password: {new_password}")
+                except ValueError:
+                    print("Please enter a valid number.")
 
-        if option == 2:
-            chars = list(" " + string.punctuation + string.digits + string.ascii_letters)
-            message = input("Text your message: ")
-            Encrypted = []
-            newMessage = ""
-            for i in range(len(chars)):
-                aux = random.choice(chars)
-                Encrypted.append(aux)
-            for letter in message:
-                newMessage += random.choice(Encrypted)
-            print(f"Encrypted message: {newMessage}")
+            case 2:
+                message = input("Type your message to encrypt: ")
+                encrypted_message = ""
+                for letter in message:
+                    if letter in chars:
+                        index = chars.index(letter)
+                        encrypted_message += key[index]
+                    else:
+                        encrypted_message += letter
+                print(f"Encrypted message: {encrypted_message}")
 
-        if option == 3:
-            print("Exiting the program...")
-            break
+            case 3:
+                message = input("Type your encrypted message: ")
+                decrypted_message = ""
+                for letter in message:
+                    if letter in key:
+                        index = key.index(letter)
+                        decrypted_message += chars[index]
+                    else:
+                        decrypted_message += letter
+                print(f"Decrypted message: {decrypted_message}")
+
+            case 4:
+                print("Exiting the program...")
+                break
+
+            case _:
+                print("Invalid option. Please select a number between 1 and 4.")
 
 if __name__ == "__main__":
-    menu()
+    menu(chars, key)
