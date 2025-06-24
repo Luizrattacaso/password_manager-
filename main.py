@@ -1,4 +1,4 @@
-import password_manager
+from passwordManager import main_menu
 from utils import generate_password,encrypt_message,decrypt_message
 
 def menu():
@@ -22,7 +22,7 @@ def menu():
             case "3":
                 decrypt_message()
             case "4":
-                password_manager.run()
+                main_menu()
             case "5":
                 print("Exiting program...")
                 break
