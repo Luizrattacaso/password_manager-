@@ -24,7 +24,10 @@ def encrypt_message():
     message = input("Type your message to encrypt:\n>>> ")
     encrypted = ""
     for letter in message:
-        encrypted += key[chars.index(letter)] if letter in chars else letter
+        if letter in chars:
+            encrypted += key[chars.index(letter)]
+        else:
+            encrypted += letter
     print(f"Encrypted message: {encrypted}")
 
 
@@ -33,5 +36,8 @@ def decrypt_message():
     message = input("Type your encrypted message:\n>>> ")
     decrypted = ""
     for letter in message:
-        decrypted += chars[key.index(letter)] if letter in key else letter
+        if letter in key:
+            decrypted += chars[key.index(letter)]
+        else:
+            decrypted += letter
     print(f"Decrypted message: {decrypted}")
