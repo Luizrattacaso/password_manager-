@@ -95,6 +95,25 @@ def add_account():
     save_data(data)
     print("Account added successfully.")
 
+def delete_account():
+    """Deleta uma conta se encontrada no gerenciador"""
+    data = load_data()
+    if not data["accounts"]:
+        print("No accounts found. Please add an account first.")
+        return
+    
+    list_accounts()
+    try:
+        index = int(input("Enter the account number to delete:\n>>> "))
+        if 1 <= len(data["accounts"]):
+            delete = data["accounts"].pop(index -1)
+            save_data(data)
+            print(f"Account '{delete['name']}' deleted successfully.")
+        else:
+            print("Invalid account number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
 def list_accounts():
     """Lista todas as contas salvas."""
     data = load_data()
@@ -123,31 +142,34 @@ def main_menu():
         print("\n[1] Enter")
         print("[2] Set master password")
         print("[3] Return to the main program")
-        choice = input(">>> ")
+        choice = input("Select an option:\n>>> ")
 
         match choice:
             case "1":
                 if verify_master_password():
                     while True:
                         print("\n[1] Add account")
-                        print("[2] List accounts")
-                        print("[3] Retrieve password")
-                        print("[4] Back to menu")
-                        option = input(">>> ")
+                        print("[2] Delete account")
+                        print("[3] List accounts")
+                        print("[4] Retrieve password")
+                        print("[5] Back to menu")
+                        option = input("Select an option:\n>>> ")
 
                         match option:
                             case "1":
                                 add_account()
                             case "2":
-                                list_accounts()
+                                delete_account()
                             case "3":
+                                list_accounts()
+                            case "4":
                                 list_accounts()
                                 try:
                                     idx = int(input("Account number: "))
                                     retrieve_password(idx)
                                 except ValueError:
                                     print("Please enter a valid number.")
-                            case "4":
+                            case "5":
                                 break
                             case _:
                                 print("Invalid option.")

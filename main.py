@@ -12,7 +12,7 @@ def menu():
         print("[3] Decrypt a message")
         print("[4] Password manager")
         print("[5] Exit")
-        choice = input("Select an option\n>>> ")
+        choice = input("Select an option:\n>>> ")
 
         match choice:
             case "1":
