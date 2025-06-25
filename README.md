@@ -4,19 +4,27 @@ This Python program is a simple command-line password manager combined with a me
 <h3>Features</h3>
 
 <h3>🔑 Password Generator</h3>
-<ul>Generate strong random passwords with a custom number of characters.</ul>
+<li>Generate strong random passwords with a custom number of characters.</li>
 <br>
 <h3>🔐 Password Manager</h3>
-<ul>Set a master password to secure access.</ul>
-<ul>Add new accounts with username and encrypted password.</ul>
-<ul>List saved accounts.</ul>
-<ul>Retrieve and decrypt passwords for any saved account.</ul>
-<ul>All data is saved securely in a JSON file and encrypted using Fernet (AES) and bcrypt hashing.</ul>
+<li>Set a master password to secure access.</li>
+<li>Add new accounts with username and encrypted password.</li>
+<li>List saved accounts.</li>
+<li>Retrieve and decrypt passwords for any saved account.</li>
+<li>All data is saved securely in a JSON file and encrypted using Fernet (AES) and bcrypt hashing.</li>
 <br>
 <h3> ✉️ Message Encryption/Decryption</h3>
-<ul>Encrypt any text using a shuffled character mapping.</ul>
-<ul>Decrypt encrypted messages back to readable text.</ul>
+<li>Encrypt any text using a shuffled character mapping.</li>
+<li>Decrypt encrypted messages back to readable text.</li>
 <br>
-<h3> ⚠️ Security Note</h3>
-<ul>The encryption used for messages is a simple substitution cipher (not recommended for real-world secure communication).</ul>
-<ul>Passwords are encrypted using Fernet and protected by a master password with bcrypt hashing.</ul>
+ <h3>Requirements</h3>
+ <li>Python 3.6+</li>
+ <li>cryptography</li>
+ <li>bcrypt</li>
+ <br>
+<h4>Install dependencies with:</h4>
+ <ul>pip install cryptography bcrypt</ul>
+<br>
+<h2> ⚠️ Security Note</h2>
+<li>The encryption used for messages is a simple substitution cipher (not recommended for real-world secure communication).</li>
+<li>Passwords are encrypted using Fernet and protected by a master password with bcrypt hashing.</li>
