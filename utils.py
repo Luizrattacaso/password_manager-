@@ -1,9 +1,13 @@
 import random
 import string
+from cryptography.fernet import Fernet
 
 chars = list(" " + string.punctuation + string.digits + string.ascii_letters)
 key = chars.copy()
 random.shuffle(key)
+
+encryption_key = Fernet.generate_key()
+cipher_suite = Fernet(encryption_key)
 
 
 def generate_password():
@@ -20,18 +24,18 @@ def generate_password():
 
 
 def encrypt_message():
-    """Criptografa uma mensagem usando um mapeamento simples entre 'chars' e 'key'."""
+    """Criptografa uma mensagem usando Fernet"""
     message = input("Type your message to encrypt:\n>>> ")
-    encrypted = ""
-    for letter in message:
-        encrypted += key[chars.index(letter)] if letter in chars else letter
-    print(f"Encrypted message: {encrypted}")
+    encrypted_value = cipher_suite.encrypt(message.encode())  # o encode converte string para bytes
+    print(f"Encrypted message: {encrypted_value.decode()}")
 
 
 def decrypt_message():
-    """Descriptografa uma mensagem previamente criptografada."""
-    message = input("Type your encrypted message:\n>>> ")
-    decrypted = ""
-    for letter in message:
-        decrypted += chars[key.index(letter)] if letter in key else letter
-    print(f"Decrypted message: {decrypted}")
+    """Descriptografa uma mensagem criptografada anteriormente."""
+    encrypted_input = input("Type your encrypted message:\n>>> ")
+    try:
+        decrypted_bytes = cipher_suite.decrypt(encrypted_input.encode())
+        print(f"Decrypted message: {decrypted_bytes.decode()}")
+    except Exception as e:
+        print("Failed to decrypt. Make sure the message is valid and was encrypted with this key.")
+        print(f"Error: {e}")

@@ -27,21 +27,37 @@ def save_data(data):
 
 
 def load_data():
-    """Carrega os dados salvos ou inicializa uma estrutura padrão."""
     if not os.path.exists(DATA_FILE):
         return {"master_password_hash": None, "accounts": []}
-    with open(DATA_FILE, "r") as f:
-        return json.load(f)
+    try:
+        with open(DATA_FILE, "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        print("Data file corrupted. Resetting...")
+        return {"master_password_hash": None, "accounts": []}
 
 
 def set_master_password():
-    """Define a senha mestra protegida por hash bcrypt."""
-    password = getpass("Enter your new master password: ")
-    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    """Define ou redefine a senha mestra protegida por hash bcrypt."""
     data = load_data()
-    data["master_password_hash"] = hashed.decode()
-    save_data(data)
-    print("Master password set successfully!")
+
+    if data["master_password_hash"] is None:
+        print("Setting the master password for the first time.")
+        password = getpass("Enter your new master password: ")
+        hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+        data["master_password_hash"] = hashed.decode()
+        save_data(data)
+        print("Master password set successfully!")
+    else:
+        print("Changing the existing master password.")
+        if verify_master_password():
+            new_password = getpass("Enter your new master password: ")
+            hashed = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt())
+            data["master_password_hash"] = hashed.decode()
+            save_data(data)
+            print("Master password changed successfully!")
+        else:
+            print("Password verification failed. Cannot change master password.")
 
 
 def verify_master_password():
