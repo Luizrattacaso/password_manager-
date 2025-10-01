@@ -1,5 +1,4 @@
-from passwordManager import main_menu
-from utils import generate_password,encrypt_message,decrypt_message
+from utils import generate_password,encrypt_message,decrypt_message, main_menu
 
 def menu():
     while True:
