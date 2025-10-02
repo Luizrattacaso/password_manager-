@@ -1,0 +1,37 @@
+📘 Resumo das bibliotecas utilizadas
+
+🔑 getpass
+Usada para ocultar a digitação de senhas no terminal (não mostra os caracteres).
+getpass(prompt) → solicita ao usuário uma senha de forma segura (sem exibir na tela).
+
+📂 json
+Usada para armazenar e carregar dados em formato JSON (estrutura em dicionário/lista).
+json.dump(dado, arquivo, indent=4) → salva os dados em um arquivo JSON (com indentação para legibilidade).
+json.load(arquivo) → lê o conteúdo de um arquivo JSON e converte em dicionário/lista no Python.
+json.JSONDecodeError → erro lançado quando o arquivo JSON está corrompido ou mal formatado.
+
+🗂️ os
+Usada para interagir com o sistema de arquivos.
+os.path.exists(caminho) → verifica se um arquivo existe.
+open(..., "rb"/"wb") → leitura/escrita em modo binário (necessário para trabalhar com chaves de criptografia).
+
+🔐 cryptography.fernet
+Biblioteca para criptografia simétrica (mesma chave para criptografar e descriptografar).
+Fernet.generate_key() → gera uma nova chave secreta (usada para encriptar/decriptar).
+Fernet(chave) → cria um objeto "Fernet" com a chave.
+fernet.encrypt(dados) → criptografa dados (precisa estar em bytes).
+fernet.decrypt(dados) → descriptografa os dados (retorna bytes).
+⚠️ Observação: .encode() e .decode() são usados para converter entre string ↔ bytes, já que o Fernet só trabalha com bytes.
+
+🛡️ bcrypt
+Usada para armazenar senhas de forma segura (hashing com salt).
+bcrypt.hashpw(senha_em_bytes, bcrypt.gensalt()) → gera um hash seguro da senha.
+bcrypt.checkpw(senha_em_bytes, hash_em_bytes) → verifica se a senha informada bate com o hash armazenado.
+⚠️ Importante: senhas não são armazenadas em texto puro, mas sim em forma de hash.
+
+✅ Como cada biblioteca contribui no código
+getpass → Entrada de senha segura sem exibir na tela.
+json → Armazena as contas e hash da senha mestra em arquivo passwords.json.
+os → Verifica se arquivos (key.key, passwords.json) já existem.
+cryptography.fernet → Criptografa/descriptografa senhas das contas.
+bcrypt → Protege a senha mestra com hash seguro.

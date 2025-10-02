@@ -147,6 +147,7 @@ def delete_account():
         return
     
     list_accounts()
+    
     try:
         index = int(input("Enter the account number to delete:\n>>> "))
         if 1 <= len(data["accounts"]):
@@ -178,48 +179,3 @@ def retrieve_password(index):
         print("Invalid account number.")
     except Exception as e:
         print(f"Error retrieving password: {e}")
-
-def main_menu():
-    """Menu principal do gerenciador de senhas."""
-    while True:
-        print("\n[1] Enter")
-        print("[2] Set master password")
-        print("[3] Return to the main program")
-        choice = input("Select an option:\n>>> ")
-
-        match choice:
-            case "1":
-                if verify_master_password():
-                    while True:
-                        print("\n[1] Add account")
-                        print("[2] Delete account")
-                        print("[3] List accounts")
-                        print("[4] Retrieve password")
-                        print("[5] Back to menu")
-                        option = input("Select an option:\n>>> ")
-
-                        match option:
-                            case "1":
-                                add_account()
-                            case "2":
-                                delete_account()
-                            case "3":
-                                list_accounts()
-                            case "4":
-                                list_accounts()
-                                try:
-                                    idx = int(input("Account number: "))
-                                    retrieve_password(idx)
-                                except ValueError:
-                                    print("Please enter a valid number.")
-                            case "5":
-                                break
-                            case _:
-                                print("Invalid option.")
-            case "2":
-                set_master_password()
-            case "3":
-                print("Exiting...")
-                break
-            case _:
-                print("Invalid option.")
