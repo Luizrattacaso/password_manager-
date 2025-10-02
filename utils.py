@@ -63,7 +63,6 @@ def save_data(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
-
 def load_data():
     if not os.path.exists(DATA_FILE):
         return {"master_password_hash": None, "accounts": []}
@@ -73,7 +72,6 @@ def load_data():
     except json.JSONDecodeError:
         print("Data file corrupted. Resetting...")
         return {"master_password_hash": None, "accounts": []}
-
 
 def set_master_password():
     """Define ou redefine a senha mestra protegida por hash bcrypt."""
@@ -128,12 +126,13 @@ def add_account():
         print("All fields are required.")
         return
 
+    encrypted_username = fernet.encrypt(username.encode()).decode()
     encrypted_password = fernet.encrypt(password.encode()).decode()
 
     data = load_data()
     data["accounts"].append({
         "name": name,
-        "username": username,
+        "username": encrypted_username,
         "password": encrypted_password
     })
     save_data(data)
@@ -174,6 +173,9 @@ def retrieve_password(index):
     try:
         account = data["accounts"][index - 1]
         decrypted_password = fernet.decrypt(account["password"].encode()).decode()
+        decrypted_username = fernet.decrypt(account["username"].encode()).decode()
+        
+        print(f"\nUsername: {decrypted_username}")
         print(f"Password: {decrypted_password}")
     except IndexError:
         print("Invalid account number.")
